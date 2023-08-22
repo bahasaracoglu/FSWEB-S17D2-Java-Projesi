@@ -1,4 +1,4 @@
-package model;
+package com.workintech.fswebs17d2.model;
 
 public enum Experience {
     JUNIOR,
