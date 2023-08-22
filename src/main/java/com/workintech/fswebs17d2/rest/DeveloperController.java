@@ -67,4 +67,37 @@ public class DeveloperController {
         developers.put(developer.getId(), newDeveloper);
         return newDeveloper;
     }
+
+    @PutMapping("/{id}")
+    public Developer updateDeveloper(@PathVariable int id, @RequestBody Developer developer) {
+        Developer updatedDeveloper = null ;
+
+        switch (developer.getExperience()) {
+
+            case JUNIOR:
+                updatedDeveloper = new Developer(developer.getId(),developer.getName(),
+                        (int) (developer.getSalary() - developer.getSalary()*taxable.getSimpleTaxRate()),
+                        developer.getExperience());
+                break;
+            case MID:
+                updatedDeveloper = new Developer(developer.getId(),developer.getName(),
+                        (int) (developer.getSalary() - developer.getSalary()*taxable.getMiddleTaxRate()),
+                        developer.getExperience());
+                break;
+            case SENIOR:
+                updatedDeveloper = new Developer(developer.getId(),developer.getName(),
+                        (int) (developer.getSalary() - developer.getSalary()*taxable.getUpperTaxRate()),
+                        developer.getExperience());
+                break;
+        }
+
+        developers.put(id, updatedDeveloper);
+        return updatedDeveloper;
+    }
+    @DeleteMapping("/{id}")
+    public Developer removeDeveloper(@PathVariable int id) {
+        Developer removedDeveloper = developers.get(id);
+        developers.remove(id);
+        return removedDeveloper;
+    }
 }
